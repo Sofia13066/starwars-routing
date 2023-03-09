@@ -1,0 +1,15 @@
+footer {
+    background-color: rgba(60, 69, 67, 0.6);
+    border-radius: 0 0 15px 15px;
+    height: 6em;
+}
+
+footer p {
+    font-size: 0.8em;
+}
+
+.email {
+    /*font-size: 1.2em;*/
+    composes: hero_titles from 'aboutMe.module.css';
+    color: black;
+}
