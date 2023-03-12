@@ -1,20 +1,23 @@
 import React, {useContext, useEffect, useState} from 'react';
 import styles from '../css/aboutMe.module.css';
-import {base_url, characters, defaultHero, navItems, period_month, StarWarsContext} from "../utils/constants";
+import {characters, defaultHero, friends, navItems, period_month, StarWarsContext} from "../utils/constants";
 import {Hero} from "../utils/types";
-import {useNavigate, useParams} from "react-router-dom";
+import {NavigateFunction, useNavigate, useParams} from "react-router-dom";
+import mainHeroAndParams from '../hof/mainHeroAndParams';
 
-const AboutMe = () => {
+interface Props4AboutMe{
+    heroId: string;
+    changeHero: (hero: string) => void;
+    navigate: NavigateFunction;
+}
+
+const AboutMe: React.FC<Props4AboutMe> = ({heroId, changeHero, navigate}) => {
 
     const [hero, setHero] = useState<Hero>();
-    let {heroId = ''} = useParams();
-    const navigate = useNavigate();
-    const { hero: currentHero, setHero: changeHero } =
-  useContext(StarWarsContext);
 
     useEffect(() => {
-        if (!Object.keys(characters).includes(heroId)) {
-            navigate(`/${navItems[1].route}/${currentHero}`);
+        if (!friends.includes(heroId)) {
+            navigate(`/${navItems[1].route}/${defaultHero}`);
         } else {
             changeHero(heroId);
             const hero = JSON.parse(localStorage.getItem(heroId)!);
@@ -45,7 +48,7 @@ const AboutMe = () => {
 
         }
 
-    }, [heroId, changeHero, navigate, currentHero])
+    }, [heroId])
 
     return (
         <div>
@@ -65,4 +68,4 @@ const AboutMe = () => {
     )
 }
 
-export default AboutMe
+export default mainHeroAndParams(AboutMe);

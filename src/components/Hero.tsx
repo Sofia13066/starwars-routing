@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import main from "../Images/main.jpg";
 import {characters, StarWarsContext} from "../utils/constants";
 
-const Heroo = () => {
+const Hero = () => {
     const {hero} = useContext(StarWarsContext);
     return (
         <section className="float-start w-25 me-3">
@@ -11,4 +11,4 @@ const Heroo = () => {
     );
 };
 
-export default Heroo;
+export default Hero;

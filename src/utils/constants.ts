@@ -70,7 +70,7 @@ export const characters: Characters = {
 };
 
 export const defaultHero = Object.keys(characters)[0];
-export const friends = [friend1, friend2, friend3, friend4, friend5, friend6, friend7, friend8, friend9];
+export const friends = Object.keys(characters);
 
 export const navItems: NavigationItem[] = [{title:'Home', route: 'home'}, {title: 'About me', route: 'about_me'},
     {title: 'Star Wars', route: 'star_wars'}, {title: 'Contact', route: 'contact'}];

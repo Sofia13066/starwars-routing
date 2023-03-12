@@ -1,14 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import "../css/contact.css";
-import {base_url, period_month} from "../utils/constants";
+import {base_url, defaultHero, friends, navItems, period_month, StarWarsContext} from "../utils/constants";
+import {NavigateFunction, useNavigate, useParams} from "react-router-dom";
+import mainHeroAndParams from '../hof/mainHeroAndParams';
 
 interface Planet {
     name: string
 }
 
-const Contact = () => {
+interface Props4Contact{
+    heroId: string;
+    changeHero: (hero: string) => void;
+    navigate: NavigateFunction;
+}
+
+const Contact: React.FC<Props4Contact> = ({heroId, changeHero, navigate}) => {
 
     const [planets, setPlanets] = useState(['wait...']);
+    
 
     async function fillPlanets(url: string) {
         const response = await fetch(url);
@@ -29,8 +38,20 @@ const Contact = () => {
         } else {
             fillPlanets(`${base_url}/v1/planets`);
         }
-        return () => console.log('Contact unmounted');
-    }, [])
+        if (!friends.includes(heroId)) {
+            navigate(`/${navItems[3].route}/${defaultHero}`);
+        } else {
+            changeHero(heroId);
+        }
+    }, [heroId])
+
+    // useEffect(() => {
+    //     if (!friends.includes(heroId)) {
+    //         navigate(`/${navItems[3].route}/${defaultHero}`);
+    //     } else {
+    //         changeHero(heroId);
+    //     }
+    // }, [heroId]);
 
     return (
         <div>
@@ -56,4 +77,4 @@ const Contact = () => {
 
 }
 
-export default Contact
+export default mainHeroAndParams(Contact);

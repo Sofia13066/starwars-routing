@@ -1,34 +1,35 @@
-import React, { useContext, useEffect, useState } from 'react';
-import Heroo from "./Heroo";
-import {Hero} from "../utils/types";
+import React, {useContext, useEffect} from 'react';
+import Hero from "./Hero";
 import DreamTeam from "./DreamTeam";
 import FarGalaxy from "./FarGalaxy";
-import { useParams, useNavigate } from 'react-router-dom';
-import { characters, navItems, StarWarsContext } from '../utils/constants';
+import {NavigateFunction, useNavigate, useParams} from "react-router-dom";
+import {defaultHero, friends, navItems, StarWarsContext} from "../utils/constants";
+import mainHeroAndParams from '../hof/mainHeroAndParams';
 
-const Home = () => {
-    const {hero, setHero} = useContext(StarWarsContext);
-    const navigate = useNavigate();
-    let {heroId = ''} = useParams();
-    const { hero: currentHero, setHero: changeHero } =
-  useContext(StarWarsContext);
+interface Props4Home{
+    heroId: string;
+    changeHero: (hero: string) => void;
+    navigate: NavigateFunction;
+}
+
+const Home: React.FC<Props4Home> = ({heroId, changeHero, navigate}) => {
+    
+
 
     useEffect(() => {
-        if (!Object.keys(characters).includes(heroId)) {
-            navigate(`/${navItems[0].route}/${currentHero}`);
-            
-    }else{
-        changeHero(heroId);
-    }
-    }, [hero, setHero, navigate])
-    
+        if (!friends.includes(heroId)) {
+            navigate(`/${navItems[0].route}/${defaultHero}`);
+        } else {
+            changeHero(heroId);
+        }
+    }, [heroId]);
     return (
         <main className="clearfix">
-            <Heroo/>
+            <Hero/>
             <DreamTeam/>
             <FarGalaxy/>
         </main>
     );
 };
 
-export default Home;
+export default mainHeroAndParams(Home);
